@@ -1,0 +1,79 @@
+<html>
+<head>
+<script src="jquery-3.5.1.min.js"></script>
+<script>
+	function start(){
+		//alert("startttt" + $("content"));
+		var movieTitle = location.search.split('mt=')[1]
+		//alert(movieTitle);
+		
+			$.ajax({
+    url:'https://www.google.pl/search?q=' + //moneyball+imdb' +
+		movieTitle+"+imdb",
+        type:'GET',
+		//type: "POST",
+		 //dataType: 'jsonp',
+        crossDomain: true,
+		"headers": {
+              "accept": "application/json",
+              "Access-Control-Allow-Origin":"*"//"x-requested-with"
+          },
+        //dataType: "json",
+        success: function(data){
+           //$('#content').html($(data).find('#firstHeading').html());
+		   console.log($(data).find("span:contains('Ocena:')"));
+        }
+});
+
+	}
+	
+	function execStart(){
+		var oShell = new ActiveXObject("Shell.Application");
+		var commandtoRun = "C:\\Windows\\notepad.exe"; 
+		oShell.ShellExecute(commandtoRun,"","","open","1");
+	}
+	
+	function startWebApi(){
+		var movieTitle = location.search.split('mt=')[1]
+		
+			$.ajax({
+		url:'https://localhost:44370/movie?movieTitle=' + movieTitle,
+        type:'GET',
+		//type: "POST",
+		 //dataType: 'jsonp',
+        crossDomain: true,
+		"headers": {
+              "accept": "application/json",
+              "Access-Control-Allow-Origin":"*"//"x-requested-with"
+          },
+        //dataType: "json",
+        success: function(data){
+           //$('#content').html($(data).find('#firstHeading').html());
+		   //console.log($(data).find("span:contains('Ocena:')"));
+			//console.log(data[0].ratingStr);
+			var rat = data[0].ratingStr;
+			$('#content').html(rat);
+		}
+		});
+	}
+	
+	window.onload = startWebApi;
+</script>
+
+
+
+</head>
+
+<body>
+
+<div id="content">
+<!--<button onclick="window.open('file:///C:/Windows/notepad.exe')">
+    Launch notepad
+</button>-->
+
+</div>
+
+</body>
+
+
+</html>
